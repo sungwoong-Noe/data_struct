@@ -19,6 +19,8 @@ public class LinkedListCustom<E> implements List<E> {
         return this.size;
     }
 
+
+    // add
     @Override
     public boolean add(E e) {
         linkLast(e);
@@ -59,6 +61,132 @@ public class LinkedListCustom<E> implements List<E> {
         linkLast(e);
     }
 
+    //remove
+    public void removeFirst() {
+
+        Node<E> f = first;
+
+        if (f == null)
+            throw new NoSuchElementException();
+
+        unlinkFirst(f);
+    }
+
+    private E unlinkFirst(Node<E> f) {
+
+        //첫번째 노드 값을 저장
+        final E element = f.item;
+        //첫번째 다음 노드를 저장
+        final Node<E> next = f.next;
+
+        //첫번째 노드 값을 비워줌
+        f.item = null;
+        //첫번째 노드 다음 노드를 비워줌
+        f.next = null;
+        //다음 노드를 첫 번째로 지정
+        first = next;
+
+        // 다음 노드가 없다면 last null처리, 있다면 이전 노드를 비워둔다.
+        if (next == null) {
+            last = null;
+        } else {
+            next.prev = null;
+        }
+        size--;
+        return element;
+    }
+
+
+    public void removeLast() {
+
+        Node<E> l = last;
+
+        if (l == null) {
+            throw new NoSuchElementException();
+        }
+        unlinkLast(l);
+    }
+
+    private E unlinkLast(Node<E> l) {
+
+        //마지막 노드의 value 값 저장
+        final E item = l.item;
+        //마지막 노드 이전 노드 저장
+        final Node<E> prev = l.prev;
+
+        //마지막 노드 value 비워둠
+        l.item = null;
+        //마지막 노드 이전 노드 비워둠
+        l.prev = null;
+        //last를 이전 노드로
+        last = prev;
+
+        //이전 노드가 없다면 first를 null로 있다면 이전 노드의 다음을 null로
+        if (prev == null) {
+            first = null;
+        }else {
+            prev.next = null;
+        }
+
+        return item;
+    }
+
+
+    @Override
+    public E remove(int index) {
+        checkPositionIndex(index);
+        return unlink(node(index));
+    }
+
+
+    private E unlink(Node<E> x) {
+        E element = x.item;
+        Node<E> prev = x.prev;
+        Node<E> next = x.next;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+
+        x.item = null;
+        size--;
+
+        return element;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+
+        if (o == null) {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (o.equals(x.item)) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 
 
     @Override
@@ -83,10 +211,6 @@ public class LinkedListCustom<E> implements List<E> {
 
 
 
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
 
     @Override
     public boolean containsAll(Collection<?> c) {
@@ -120,7 +244,8 @@ public class LinkedListCustom<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        return null;
+        checkPositionIndex(index);
+        return node(index).item;
     }
 
     @Override
@@ -128,10 +253,7 @@ public class LinkedListCustom<E> implements List<E> {
         return null;
     }
 
-    @Override
-    public E remove(int index) {
-        return null;
-    }
+
 
     @Override
     public int indexOf(Object o) {
@@ -158,16 +280,6 @@ public class LinkedListCustom<E> implements List<E> {
         return List.of();
     }
 
-
-    private Node<E> search(int index) {
-
-        Node<E> n = first;
-        for (int i = 0; i < index; i++) {
-            n = n.next;
-        }
-
-        return n;
-    }
 
     private void linkLast(E e) {
         Node<E> l = last;
@@ -221,6 +333,18 @@ public class LinkedListCustom<E> implements List<E> {
             return x;
         }
     }
+
+
+    private Node<E> search(int index) {
+
+        Node<E> n = first;
+        for (int i = 0; i < index; i++) {
+            n = n.next;
+        }
+
+        return n;
+    }
+
 
 
 
