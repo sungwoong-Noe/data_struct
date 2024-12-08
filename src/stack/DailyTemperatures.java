@@ -24,6 +24,29 @@ public class DailyTemperatures {
         return answer;
     }
 
+
+    public int[] solution(int[] temperatures) {
+
+        Deque<Weather> deque = new ArrayDeque<>();
+        int[] answer = new int[temperatures.length];
+
+        deque.push(new Weather(0, temperatures[0]));
+
+        for (int i = 1; i < temperatures.length; i++) {
+
+            while (!deque.isEmpty() && deque.peek().temp < temperatures[i]) {
+                Weather pop = deque.pop();
+                answer[i] = i - pop.day;
+            }
+
+            deque.push(new Weather(i, temperatures[i]));
+        }
+
+        return answer;
+    }
+
+
+
     static class Weather {
         int day;
         int temp;

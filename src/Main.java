@@ -1,16 +1,21 @@
 import linkedlist.BrowserHistory;
 import linkedlist.BrowserHistory2;
+import stack.BaseballGame;
 import stack.DailyTemperatures;
 
 public class Main {
     public static void main(String[] args) {
 
-        DailyTemperatures dailyTemperatures = new DailyTemperatures();
-        int[] solution = dailyTemperatures.Solution(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
+        BaseballGame baseballGame = new BaseballGame();
 
-        for (int i : solution) {
-            System.out.println("i = " + i);
-        }
+
+        String[] strings = {"5", "-2", "4", "C", "D", "9", "+", "+"};
+
+        int i = baseballGame.calPoints(strings);
+
+
+        System.out.println("i = " + i);
+
 
     }
 }
