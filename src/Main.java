@@ -1,21 +1,16 @@
 import linkedlist.BrowserHistory;
 import linkedlist.BrowserHistory2;
+import stack.DailyTemperatures;
 
 public class Main {
     public static void main(String[] args) {
 
-        BrowserHistory2 history = new BrowserHistory2("leetcode.com");
+        DailyTemperatures dailyTemperatures = new DailyTemperatures();
+        int[] solution = dailyTemperatures.Solution(new int[]{73, 74, 75, 71, 69, 72, 76, 73});
 
-        history.visit("google.com");
-        history.visit("facebook.com");
-        history.visit("youtube.com");
-        history.back(1);
-        history.back(1);
-        history.forward(1);
-        history.visit("linkedin.com");
-        history.forward(2);
-        history.back(2);
-        history.back(7);
+        for (int i : solution) {
+            System.out.println("i = " + i);
+        }
 
     }
 }
